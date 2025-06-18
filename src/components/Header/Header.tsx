@@ -1,14 +1,15 @@
 import SearchBar from './SearchBar';
 import CreateBoardButton from './CreateBoardButton';
 import DeleteBoardButton from './DeleteBoardButton';
+import "./header.css";
 
 const Header = () => {
   return (
-    <div>
+    <header className="header">
       <SearchBar />
       <CreateBoardButton />
       <DeleteBoardButton />
-    </div>
+    </header>
   );
 };
 
