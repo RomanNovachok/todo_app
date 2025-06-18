@@ -10,13 +10,8 @@ router.get('/search', async (req: Request, res: Response): Promise<void> => {
         res.status(400).json({ message: 'Missing search query' });
         return;
       }
-      
-      const board = await Board.findOne({
-        $or: [
-          { id: query },
-          { name: { $regex: query, $options: 'i' } } // нечіткий пошук по назві
-        ]
-      });
+
+      const board = await Board.findOne({ id: query });
   
       if (!board) {
         res.status(404).json({ message: 'Board not found' });

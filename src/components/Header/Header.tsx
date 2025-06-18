@@ -1,4 +1,5 @@
 import SearchBar from './SearchBar';
+import CreateBoardButton from './CreateBoardButton';
 
 type Task = {
   title: string;
@@ -19,6 +20,7 @@ const Header = ({ onSearchResult }: Props) => {
   return (
     <div>
       <SearchBar onSearchResult={onSearchResult} />
+      <CreateBoardButton/>
     </div>
   );
 };
