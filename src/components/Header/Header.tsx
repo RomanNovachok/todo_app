@@ -18,7 +18,6 @@ type Props = {
 const Header = ({ onSearchResult }: Props) => {
   return (
     <div>
-      <h1>Header</h1>
       <SearchBar onSearchResult={onSearchResult} />
     </div>
   );

@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 const boardSchema = new Schema({
-  id: { type: String, required: true },
+  id: { type: String, required: true, unique: true },
   name: { type: String, required: true },
   columns: {
     type: Map,

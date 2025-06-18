@@ -10,7 +10,7 @@ router.get('/search', async (req: Request, res: Response): Promise<void> => {
         res.status(400).json({ message: 'Missing search query' });
         return;
       }
-  
+      
       const board = await Board.findOne({
         $or: [
           { id: query },
@@ -59,7 +59,7 @@ router.post('/', async (req: Request, res: Response) => {
     res.status(201).json(newBoard);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
-  }
+  }  
 });
 
 export default router;
