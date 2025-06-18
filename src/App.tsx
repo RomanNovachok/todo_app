@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div>
-      <Header onSearchResult={setBoard} />
+      <Header onSearchResult={setBoard} onCreateBoard={setBoard} />
       <BoardComponent board={board} />
     </div>
   );

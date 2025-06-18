@@ -14,13 +14,14 @@ type Board = {
 
 type Props = {
   onSearchResult: (board: Board | null) => void;
+  onCreateBoard: (board: Board) => void;
 };
 
-const Header = ({ onSearchResult }: Props) => {
+const Header = ({ onSearchResult, onCreateBoard }: Props) => {
   return (
     <div>
       <SearchBar onSearchResult={onSearchResult} />
-      <CreateBoardButton/>
+      <CreateBoardButton onCreate={onCreateBoard} />
     </div>
   );
 };

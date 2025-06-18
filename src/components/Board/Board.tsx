@@ -20,7 +20,8 @@ const BoardComponent = ({ board }: Props) => {
 
   return (
     <div>
-      <h2>{board.name}</h2>
+      <h2>Name: {board.name}</h2>
+      <h2>Board id: {board.id}</h2>
       <div style={{ display: 'flex', gap: '20px' }}>
         {Object.entries(board.columns).map(([columnName, tasks]) => (
           <div key={columnName}>
