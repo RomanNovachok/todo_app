@@ -1,43 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from './store';
 import Header from './components/Header/Header';
 import BoardComponent from './components/Board/Board';
+import { setBoard, clearBoard } from './store/boardSlice';
 import { Board } from './types/types';
 
 function App() {
-  const [board, setBoard] = useState<Board | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const dispatch: AppDispatch = useDispatch();
+  const board = useSelector((state: RootState) => state.board.currentBoard);
+  const errorMessage = useSelector((state: RootState) => state.board.error);
 
   const handleBoardUpdate = (updatedBoard: Board) => {
-    setBoard(updatedBoard);
-  };  
+    dispatch(setBoard(updatedBoard));
+  };
 
   const handleSearchResult = (board: Board | null, reason?: string) => {
-    setBoard(board);
+    if (board) {
+      dispatch(setBoard(board));
+    } else {
+      dispatch(clearBoard());
+    }
   
     if (reason === 'deleted') {
-      setErrorMessage(null);
-    } else if (board === null) {
-      setErrorMessage("Boards with this ID do not exist, or you entered an incorrect ID.");
-    } else {
-      setErrorMessage(null); 
+      dispatch(clearBoard());
     }
   };
+  
 
   const handleCreateBoard = (board: Board) => {
-    setBoard(board);
-    setErrorMessage(null);
+    dispatch(setBoard(board));
   };
-
-  const handleUpdateBoard = (updatedBoard: Board) => {
-    setBoard(updatedBoard);
-  };  
 
   return (
     <div>
       <Header board={board} onSearchResult={handleSearchResult} onCreateBoard={handleCreateBoard} />
-      <BoardComponent board={board} errorMessage={errorMessage} onBoardUpdate={handleUpdateBoard}/>
-
-
+      <BoardComponent board={board} errorMessage={errorMessage} onBoardUpdate={handleBoardUpdate} />
     </div>
   );
 }
