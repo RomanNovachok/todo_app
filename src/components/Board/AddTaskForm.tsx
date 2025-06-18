@@ -1,41 +1,44 @@
+// src/components/Board/AddTaskForm.tsx
 import React, { useState } from 'react';
-import { Task, Board } from '../../types/types';
+import { Task } from '../../types/types';
 import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { updateBoard } from '../../store/boardSlice';
 
 type Props = {
   boardId: string;
   columnName: string;
-  onBoardUpdate: (updatedBoard: Board) => void;
 };
 
-const AddTaskForm = ({ boardId, columnName, onBoardUpdate }: Props) => {
+const AddTaskForm = ({ boardId, columnName }: Props) => {
+  const dispatch = useAppDispatch();
+  const board = useAppSelector((state) => state.board.currentBoard);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleAdd = async () => {
+  if (!board) return null;
+
+  const handleAdd = () => {
     if (!title.trim()) return;
 
     const newTask: Task = {
       id: uuidv4(),
       title,
       description,
-      status: columnName as 'ToDo',
+      status: columnName as 'ToDo', // або типізувати загалом
     };
 
-    try {
-      const res = await axios.get<Board>(`/api/boards/${boardId}`);
-      const updatedBoard = { ...res.data };
-      updatedBoard.columns[columnName].push(newTask);
+    const updatedBoard = {
+      ...board,
+      columns: {
+        ...board.columns,
+        [columnName]: [...board.columns[columnName], newTask],
+      },
+    };
 
-      const putRes = await axios.put<Board>(`/api/boards/${boardId}`, updatedBoard);
-      onBoardUpdate(putRes.data);
-
-      setTitle('');
-      setDescription('');
-    } catch (err) {
-      console.error('Error adding task:', err);
-    }
+    dispatch(updateBoard(updatedBoard));
+    setTitle('');
+    setDescription('');
   };
 
   return (

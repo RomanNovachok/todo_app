@@ -81,7 +81,7 @@ router.put('/:id', async (req: Request, res: Response): Promise<void> => {
     const updatedBoard = await Board.findOneAndUpdate(
       { id },
       updatedData,
-      { new: true } // Повернути оновлений документ
+      { new: true } 
     );
 
     if (!updatedBoard) {

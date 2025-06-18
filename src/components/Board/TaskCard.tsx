@@ -1,16 +1,16 @@
+// src/components/Board/TaskCard.tsx
 import React from 'react';
-import { Board, Task } from '../../types/types';
-import AddTaskForm from './AddTaskForm';
+import { Task } from '../../types/types';
 import TaskItem from './TaskItem';
+import AddTaskForm from './AddTaskForm';
 
 type Props = {
   columnName: string;
   tasks: Task[];
   boardId: string;
-  onBoardUpdate: (updatedBoard: Board) => void;
 };
 
-const TaskCard = ({ columnName, tasks, boardId, onBoardUpdate }: Props) => {
+const TaskCard = ({ columnName, tasks, boardId }: Props) => {
   return (
     <div style={{ border: '1px solid #ccc', padding: '10px', width: '300px' }}>
       <h3>{columnName}</h3>
@@ -21,12 +21,11 @@ const TaskCard = ({ columnName, tasks, boardId, onBoardUpdate }: Props) => {
             task={task}
             boardId={boardId}
             columnName={columnName}
-            onBoardUpdate={onBoardUpdate}
           />
         ))}
       </ul>
       {columnName === 'ToDo' && (
-        <AddTaskForm boardId={boardId} columnName={columnName} onBoardUpdate={onBoardUpdate} />
+        <AddTaskForm boardId={boardId} columnName={columnName} />
       )}
     </div>
   );

@@ -1,13 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
-import { Board, Task } from '../../types/types';
+import { useAppDispatch } from '../../store/hooks';
+import { createBoard } from '../../store/boardSlice';
+import { Board } from '../../types/types';
 
-type Props = {
-  onCreate: (board: Board) => void;
-};
+const CreateBoardButton = () => {
+  const dispatch = useAppDispatch();
 
-const CreateBoardButton = ({ onCreate }: Props) => {
-  const handleCreateBoard = async () => {
+  const handleCreateBoard = () => {
     const newBoard: Board = {
       id: uuidv4(),
       name: 'No Name',
@@ -18,12 +17,7 @@ const CreateBoardButton = ({ onCreate }: Props) => {
       },
     };
 
-    try {
-      const res = await axios.post<Board>("http://localhost:5000/api/boards", newBoard);
-      onCreate(res.data); 
-    } catch (err) {
-      console.error("Error creating board:", err);
-    }
+    dispatch(createBoard(newBoard));
   };
 
   return <button onClick={handleCreateBoard}>Create New Board</button>;

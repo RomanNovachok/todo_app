@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
+import { AppDispatch } from '../../store/store';
 import { fetchBoardById } from '../../store/boardSlice';
 import SearchInput from './SearchInput';
 import SearchButton from './SearchButton';

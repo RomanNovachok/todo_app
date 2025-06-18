@@ -1,16 +1,13 @@
+// src/components/Board/Board.tsx
 import React from 'react';
-import { Board, Task } from '../../types/types';
+import { useAppSelector } from '../../store/hooks';
 import TaskCard from './TaskCard';
 
-type Props = {
-  board: Board | null;
-  errorMessage?: string | null;
-  onBoardUpdate: (updatedBoard: Board) => void;
-};
+const BoardComponent = () => {
+  const board = useAppSelector((state) => state.board.currentBoard);
+  const errorMessage = useAppSelector((state) => state.board.error);
 
-
-const BoardComponent = ({ board, errorMessage, onBoardUpdate }: Props) => {
-  if (errorMessage) return <p>{errorMessage}</p>;
+  if (errorMessage) return <p style={{ color: 'red' }}>{errorMessage}</p>;
   if (!board) return <p>No board loaded.</p>;
 
   return (
@@ -24,13 +21,11 @@ const BoardComponent = ({ board, errorMessage, onBoardUpdate }: Props) => {
             columnName={columnName}
             tasks={tasks}
             boardId={board.id}
-            onBoardUpdate={onBoardUpdate} 
           />
         ))}
       </div>
     </div>
   );
 };
-
 
 export default BoardComponent;

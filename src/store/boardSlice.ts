@@ -1,6 +1,6 @@
 // src/store/boardSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios from '../api/axiosInstance';
 import { Board } from '../types/types';
 
 interface BoardState {
@@ -39,6 +39,31 @@ export const updateBoard = createAsyncThunk(
   }
 );
 
+export const createBoard = createAsyncThunk(
+    'board/create',
+    async (board: Board, { rejectWithValue }) => {
+      try {
+        const response = await axios.post('/api/boards', board);
+        return response.data as Board;
+      } catch (err) {
+        return rejectWithValue('Failed to create board');
+      }
+    }
+  );
+  
+  export const deleteBoardById = createAsyncThunk(
+    'board/delete',
+    async (id: string, { rejectWithValue }) => {
+      try {
+        await axios.delete(`/api/boards/${id}`);
+        return id;
+      } catch (err) {
+        return rejectWithValue('Failed to delete board');
+      }
+    }
+  );
+  
+
 const boardSlice = createSlice({
   name: 'board',
   initialState,
@@ -53,7 +78,15 @@ const boardSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
+      builder
+      .addCase(deleteBoardById.fulfilled, (state) => {
+        state.currentBoard = null;
+        state.error = null;
+      })
+      .addCase(createBoard.fulfilled, (state, action) => {
+        state.currentBoard = action.payload;
+        state.error = null;
+      })
       .addCase(fetchBoardById.pending, (state) => {
         state.loading = true;
         state.error = null;
