@@ -1,17 +1,7 @@
 import SearchBar from './SearchBar';
 import CreateBoardButton from './CreateBoardButton';
 import DeleteBoardButton from './DeleteBoardButton';
-
-type Task = {
-  title: string;
-  description: string;
-};
-
-type Board = {
-  id: string;
-  name: string;
-  columns: Record<string, Task[]>;
-};
+import { Board } from '../../types/types';
 
 type Props = {
   board: Board | null;
@@ -24,7 +14,7 @@ const Header = ({ board, onSearchResult, onCreateBoard }: Props) => {
     <div>
       <SearchBar onSearchResult={onSearchResult} />
       <CreateBoardButton onCreate={onCreateBoard} />
-      {board && <DeleteBoardButton boardId={board.id} onBoardDeleted={onSearchResult} />}
+      <DeleteBoardButton board={board} onBoardDeleted={onSearchResult} /> {/* показуємо завжди */}
     </div>
   );
 };

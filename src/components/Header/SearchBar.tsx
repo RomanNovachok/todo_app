@@ -2,17 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import SearchInput from './SearchInput';
 import SearchButton from './SearchButton';
-
-type Task = {
-  title: string;
-  description: string;
-};
-
-type Board = {
-  id: string;
-  name: string;
-  columns: Record<string, Task[]>;
-};
+import { Board } from '../../types/types';
 
 type Props = {
   onSearchResult: (board: Board | null) => void;

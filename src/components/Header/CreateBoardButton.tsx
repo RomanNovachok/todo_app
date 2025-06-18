@@ -1,16 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-
-type Task = {
-  title: string;
-  description: string;
-};
-
-type Board = {
-  id: string;
-  name: string;
-  columns: Record<string, Task[]>;
-};
+import { Board, Task } from '../../types/types';
 
 type Props = {
   onCreate: (board: Board) => void;
@@ -18,9 +8,9 @@ type Props = {
 
 const CreateBoardButton = ({ onCreate }: Props) => {
   const handleCreateBoard = async () => {
-    const newBoard = {
+    const newBoard: Board = {
       id: uuidv4(),
-      name: "No Name",
+      name: 'No Name',
       columns: {
         ToDo: [],
         InProgress: [],

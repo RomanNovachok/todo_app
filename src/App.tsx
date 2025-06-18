@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
 import Header from './components/Header/Header';
 import BoardComponent from './components/Board/Board';
-
-type Task = {
-  title: string;
-  description: string;
-};
-
-type Board = {
-  id: string;
-  name: string;
-  columns: Record<string, Task[]>;
-};
+import { Board } from './types/types';
 
 function App() {
   const [board, setBoard] = useState<Board | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleBoardUpdate = (updatedBoard: Board) => {
+    setBoard(updatedBoard);
+  };  
 
   const handleSearchResult = (board: Board | null, reason?: string) => {
     setBoard(board);
@@ -31,13 +25,19 @@ function App() {
 
   const handleCreateBoard = (board: Board) => {
     setBoard(board);
-    setErrorMessage(null); // нова дошка — значить помилки немає
+    setErrorMessage(null);
   };
+
+  const handleUpdateBoard = (updatedBoard: Board) => {
+    setBoard(updatedBoard);
+  };  
 
   return (
     <div>
       <Header board={board} onSearchResult={handleSearchResult} onCreateBoard={handleCreateBoard} />
-      <BoardComponent board={board} errorMessage={errorMessage} />
+      <BoardComponent board={board} errorMessage={errorMessage} onBoardUpdate={handleUpdateBoard}/>
+
+
     </div>
   );
 }

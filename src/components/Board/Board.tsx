@@ -1,24 +1,16 @@
 import React from 'react';
-
-type Task = {
-  title: string;
-  description: string;
-};
-
-type Board = {
-  id: string;
-  name: string;
-  columns: Record<string, Task[]>;
-};
+import { Board, Task } from '../../types/types';
+import TaskCard from './TaskCard';
 
 type Props = {
   board: Board | null;
   errorMessage?: string | null;
+  onBoardUpdate: (updatedBoard: Board) => void;
 };
 
-const BoardComponent = ({ board, errorMessage }: Props) => {
-  if (errorMessage) return <p>{errorMessage}</p>;
 
+const BoardComponent = ({ board, errorMessage, onBoardUpdate }: Props) => {
+  if (errorMessage) return <p>{errorMessage}</p>;
   if (!board) return <p>No board loaded.</p>;
 
   return (
@@ -27,20 +19,18 @@ const BoardComponent = ({ board, errorMessage }: Props) => {
       <h2>Board id: {board.id}</h2>
       <div style={{ display: 'flex', gap: '20px' }}>
         {Object.entries(board.columns).map(([columnName, tasks]) => (
-          <div key={columnName}>
-            <h3>{columnName}</h3>
-            <ul>
-              {tasks.map((task, i) => (
-                <li key={i}>
-                  <strong>{task.title}</strong>: {task.description}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <TaskCard
+            key={columnName}
+            columnName={columnName}
+            tasks={tasks}
+            boardId={board.id}
+            onBoardUpdate={onBoardUpdate} 
+          />
         ))}
       </div>
     </div>
   );
 };
+
 
 export default BoardComponent;

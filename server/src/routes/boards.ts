@@ -73,5 +73,29 @@ router.delete('/:id', async (req: Request, res: Response) => {
   }
 });
 
+router.put('/:id', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    const updatedBoard = await Board.findOneAndUpdate(
+      { id },
+      updatedData,
+      { new: true } // Повернути оновлений документ
+    );
+
+    if (!updatedBoard) {
+      res.status(404).json({ message: 'Board not found' });
+      return;
+    }
+
+    res.status(200).json(updatedBoard);
+  } catch (err) {
+    console.error('PUT /:id error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 
 export default router;
