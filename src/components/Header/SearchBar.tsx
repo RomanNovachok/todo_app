@@ -20,14 +20,15 @@ type Props = {
 
 const SearchBar = ({ onSearchResult }: Props) => {
   const [query, setQuery] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   const handleSearch = async () => {
     try {
       const response = await axios.get<Board>(`/api/boards/search?query=${encodeURIComponent(query)}`);
       onSearchResult(response.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error searching board:', error);
-      onSearchResult(null);
+      onSearchResult(null); 
     }
   };
 
@@ -35,6 +36,7 @@ const SearchBar = ({ onSearchResult }: Props) => {
     <div>
       <SearchInput value={query} onChange={setQuery} />
       <SearchButton onClick={handleSearch} />
+      {error && <p style={{ color: 'red', marginTop: '0.5rem' }}>{error}</p>}
     </div>
   );
 };

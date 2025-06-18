@@ -15,11 +15,29 @@ type Board = {
 
 function App() {
   const [board, setBoard] = useState<Board | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleSearchResult = (board: Board | null, reason?: string) => {
+    setBoard(board);
+  
+    if (reason === 'deleted') {
+      setErrorMessage(null);
+    } else if (board === null) {
+      setErrorMessage("Boards with this ID do not exist, or you entered an incorrect ID.");
+    } else {
+      setErrorMessage(null); 
+    }
+  };
+
+  const handleCreateBoard = (board: Board) => {
+    setBoard(board);
+    setErrorMessage(null); // нова дошка — значить помилки немає
+  };
 
   return (
     <div>
-      <Header onSearchResult={setBoard} onCreateBoard={setBoard} />
-      <BoardComponent board={board} />
+      <Header board={board} onSearchResult={handleSearchResult} onCreateBoard={handleCreateBoard} />
+      <BoardComponent board={board} errorMessage={errorMessage} />
     </div>
   );
 }

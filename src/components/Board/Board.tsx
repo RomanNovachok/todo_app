@@ -13,9 +13,12 @@ type Board = {
 
 type Props = {
   board: Board | null;
+  errorMessage?: string | null;
 };
 
-const BoardComponent = ({ board }: Props) => {
+const BoardComponent = ({ board, errorMessage }: Props) => {
+  if (errorMessage) return <p>{errorMessage}</p>;
+
   if (!board) return <p>No board loaded.</p>;
 
   return (
