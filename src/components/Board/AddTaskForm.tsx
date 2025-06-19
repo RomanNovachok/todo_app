@@ -1,9 +1,9 @@
-// src/components/Board/AddTaskForm.tsx
 import React, { useState } from 'react';
 import { Task } from '../../types/types';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { updateBoard } from '../../store/boardSlice';
+import './styles/addtaskform.css';
 
 type Props = {
   boardId: string;
@@ -42,7 +42,7 @@ const AddTaskForm = ({ boardId, columnName }: Props) => {
   };
 
   return (
-    <div style={{ marginTop: '10px' }}>
+    <div className="add-task-form">
       <input
         type="text"
         placeholder="Task title"
@@ -53,6 +53,7 @@ const AddTaskForm = ({ boardId, columnName }: Props) => {
         placeholder="Task description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        rows={3}
       />
       <button onClick={handleAdd}>Add Task</button>
     </div>

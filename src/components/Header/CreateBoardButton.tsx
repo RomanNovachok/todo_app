@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAppDispatch } from '../../store/hooks';
 import { createBoard } from '../../store/boardSlice';
 import { Board } from '../../types/types';
+import './header.css'; 
 
 const CreateBoardButton = () => {
   const dispatch = useAppDispatch();

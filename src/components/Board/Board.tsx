@@ -4,11 +4,14 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { updateBoard } from '../../store/boardSlice';
 import TaskCard from './TaskCard';
 import { Board, Task } from '../../types/types';
+import './styles/board.css';
+import copyImage from '../../assets/images/copy-icon.svg'; 
 
 const BoardComponent = () => {
   const dispatch = useAppDispatch();
   const board = useAppSelector((state) => state.board.currentBoard);
   const errorMessage = useAppSelector((state) => state.board.error);
+
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState('');
 
@@ -40,7 +43,6 @@ const BoardComponent = () => {
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
-
     if (!destination || !board) return;
 
     const sourceCol = source.droppableId;
@@ -52,7 +54,6 @@ const BoardComponent = () => {
 
     if (sourceCol === destCol) {
       sourceTasks.splice(destination.index, 0, movedTask);
-
       const updatedBoard: Board = {
         ...board,
         columns: {
@@ -81,41 +82,59 @@ const BoardComponent = () => {
     }
   };
 
-  if (errorMessage) return <p style={{ color: 'red' }}>{errorMessage}</p>;
-  if (!board) return <p>No board loaded.</p>;
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div>
-        {isEditingName ? (
-          <input
-            value={editedName}
-            onChange={handleNameChange}
-            onBlur={saveBoardName}
-            onKeyDown={(e) => e.key === 'Enter' && saveBoardName()}
-            autoFocus
-          />
-        ) : (
-          <h2 onClick={handleNameClick} style={{ cursor: 'pointer' }}>
-            Name: {board.name}
-          </h2>
+      <div className='board-container'>
+        {!board && (
+          <p className='board-status'>
+            {errorMessage ? (
+              <span>{errorMessage}</span>
+            ) : (
+              'No board loaded'
+            )}
+          </p>
         )}
 
-        <h2>
-          Board ID: {board.id}{' '}
-          <button onClick={handleCopy} style={{ marginLeft: '8px' }}>copy</button>
-        </h2>
-
-        <div style={{ display: 'flex', gap: '20px' }}>
-          {Object.entries(board.columns).map(([columnName, tasks]) => (
-            <TaskCard
-              key={columnName}
-              columnName={columnName}
-              tasks={tasks}
-              boardId={board.id}
-            />
-          ))}
-        </div>
+        {board && (
+          <>
+            <div className="board-details-area">
+              <div className='board-details-area-name'>
+              {isEditingName ? (
+                <input
+                  value={editedName}
+                  onChange={handleNameChange}
+                  onBlur={saveBoardName}
+                  onKeyDown={(e) => e.key === 'Enter' && saveBoardName()}
+                  autoFocus
+                />
+              ) : (
+                <h2 onClick={handleNameClick} style={{ cursor: 'pointer' }}>
+                  Name: {board.name}
+                </h2>
+              )}
+              </div>
+              <div className="board-details-area-id">
+                <h2>
+                  Board ID: {board.id}{' '}
+                  <button onClick={handleCopy}>
+                    <img src={copyImage} alt="" />
+                  </button>
+                </h2>
+              </div>
+            </div>
+            
+            <div className='columns-container'>
+              {Object.entries(board.columns).map(([columnName, tasks]) => (
+                <TaskCard
+                  key={columnName}
+                  columnName={columnName}
+                  tasks={tasks}
+                  boardId={board.id}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </DragDropContext>
   );

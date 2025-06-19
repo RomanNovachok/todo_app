@@ -1,3 +1,5 @@
+import './header.css'; 
+
 type Props = {
     value: string;
     onChange: (v: string) => void;
@@ -5,7 +7,7 @@ type Props = {
 
 const SearchInput = ({value, onChange}: Props) => {
     return (
-        <div>
+        <div className="search-input">
             <input
                 placeholder="Enter board id..."
                 value={value}

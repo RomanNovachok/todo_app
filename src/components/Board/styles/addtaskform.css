@@ -1,0 +1,41 @@
+.add-task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 0.6rem 0.8rem;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.add-task-form input,
+.add-task-form textarea {
+    font-family: inherit;
+    font-size: 0.6rem;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.75);
+    resize: none;
+}
+
+.add-task-form textarea {
+    min-height: 10px;
+    max-height: 40px;
+}
+
+.add-task-form button {
+    align-self: flex-start;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.6rem;
+    font-weight: 500;
+    background-color: #a0d1df;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-task-form button:hover {
+    background-color: #8ac3d4;
+}

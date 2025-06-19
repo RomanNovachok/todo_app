@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deleteBoardById } from '../../store/boardSlice';
+import './header.css'; 
 
 const DeleteBoardButton = () => {
   const dispatch = useAppDispatch();

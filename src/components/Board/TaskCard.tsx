@@ -1,9 +1,9 @@
-// src/components/Board/TaskCard.tsx
 import React from 'react';
 import { Task } from '../../types/types';
 import TaskItem from './TaskItem';
 import AddTaskForm from './AddTaskForm';
 import { Droppable } from '@hello-pangea/dnd';
+import './styles/taskcard.css';
 
 type Props = {
   columnName: string;
@@ -16,32 +16,26 @@ const TaskCard = ({ columnName, tasks, boardId }: Props) => {
     <Droppable droppableId={columnName}>
       {(provided) => (
         <div
+          className="column"
           ref={provided.innerRef}
           {...provided.droppableProps}
-          style={{
-            border: '1px solid #ccc',
-            padding: '10px',
-            width: '300px',
-            minHeight: '200px',
-            backgroundColor: '#f4f4f4',
-          }}
         >
-          <h3>{columnName}</h3>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
+          <div className="column-header">{columnName}</div>
+          <ul className="task-list">
             {tasks.map((task, index) => (
               <TaskItem
                 key={task.id}
                 task={task}
                 boardId={boardId}
                 columnName={columnName}
-                index={index} 
+                index={index}
               />
             ))}
             {provided.placeholder}
           </ul>
 
           {columnName === 'ToDo' && (
-            <div style={{ marginTop: '10px' }}>
+            <div className="add-task-area">
               <AddTaskForm boardId={boardId} columnName={columnName} />
             </div>
           )}

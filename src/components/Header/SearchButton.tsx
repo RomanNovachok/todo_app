@@ -1,3 +1,5 @@
+import './header.css'; 
+
 type Props = {
     onClick: () => void;
 }

@@ -1,0 +1,57 @@
+.task-item {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.task-item:hover {
+  transform: translateY(-2px);
+}
+
+.task-item-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+.task-item-description {
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.task-item-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.task-item-buttons button {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  background: #e3e6ff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.task-item-buttons button:hover {
+  background: #c8d0ff;
+}
+
+.task-item input,
+.task-item textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  resize: vertical;
+  background: rgba(255, 255, 255, 0.7);
+}

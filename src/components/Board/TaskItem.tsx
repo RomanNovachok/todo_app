@@ -4,6 +4,7 @@ import { Task } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { updateBoard } from '../../store/boardSlice';
 import { Draggable } from '@hello-pangea/dnd';
+import './styles/taskitem.css';
 
 type Props = {
   task: Task;
@@ -52,35 +53,38 @@ const TaskItem = ({ task, boardId, columnName, index }: Props) => {
     <Draggable draggableId={task.id} index={index}>
       {(provided) => (
         <li
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          style={{
-            ...provided.draggableProps.style,
-            marginBottom: '10px',
-            backgroundColor: '#fff',
-            padding: '8px',
-            borderRadius: '4px',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-          }}
-        >
-          {isEditing ? (
-            <div>
-              <input value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} />
-              <textarea value={editedDescription} onChange={(e) => setEditedDescription(e.target.value)} />
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        className="task-item"
+      >
+        {isEditing ? (
+          <div>
+            <input
+              value={editedTitle}
+              onChange={(e) => setEditedTitle(e.target.value)}
+            />
+            <textarea
+              value={editedDescription}
+              onChange={(e) => setEditedDescription(e.target.value)}
+            />
+            <div className="task-item-buttons">
               <button onClick={handleSave}>Save</button>
               <button onClick={() => setIsEditing(false)}>Cancel</button>
             </div>
-          ) : (
-            <div>
-              <strong>{task.title}</strong>: {task.description}
-              <div>
-                <button onClick={() => setIsEditing(true)}>Edit</button>
-                <button onClick={handleDelete}>Delete</button>
-              </div>
+          </div>
+        ) : (
+          <div>
+            <div className="task-item-title">{`${task.title} :`}</div>
+            <div className="task-item-description">{task.description}</div>
+            <div className="task-item-buttons">
+              <button onClick={() => setIsEditing(true)}>Edit</button>
+              <button onClick={handleDelete}>Delete</button>
             </div>
-          )}
-        </li>
+          </div>
+        )}
+      </li>
+      
       )}
     </Draggable>
   );
